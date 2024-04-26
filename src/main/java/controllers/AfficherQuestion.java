@@ -88,11 +88,11 @@ public class AfficherQuestion implements Initializable {
         card.setMinHeight(120.0);
         card.setPrefWidth(250.0);
 
-        Label counterLabel = new Label("Question " + counter + ": ");
+     /*   Label counterLabel = new Label("Question " + counter + ": ");
         counterLabel.setLayoutX(10.0);
         counterLabel.setLayoutY(30.0);
         counterLabel.setFont(new Font(14.0));
-
+*/
         Label contentLabel = new Label(question.getContent());
         contentLabel.setLayoutX(10.0);
         contentLabel.setLayoutY(60.0);
@@ -129,7 +129,7 @@ public class AfficherQuestion implements Initializable {
         buttonPane.setLayoutY(240.0);
 
         // Ajouter tous les éléments à la carte
-        card.getChildren().addAll( counterLabel, contentLabel, choice1Label, choice2Label, choice3Label, correctChoiceLabel, testLabel, buttonPane);
+        card.getChildren().addAll(contentLabel, choice1Label, choice2Label, choice3Label, correctChoiceLabel, testLabel, buttonPane);
 
         return card;
     }

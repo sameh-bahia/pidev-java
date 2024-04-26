@@ -81,11 +81,11 @@ public class AfficherTest implements Initializable {
         card.setMinHeight(160.0); // Ajuster la hauteur minimale de la carte
         card.setPrefWidth(250.0);
 
-        Label counterLabel = new Label("Test " + counter + ": ");
+      /*  Label counterLabel = new Label("Test " + counter + ": ");
         counterLabel.setLayoutX(10.0);
         counterLabel.setLayoutY(30.0);
         counterLabel.setFont(new Font(14.0));
-
+*/
         Label contentLabel = new Label(test.getTitle());
         contentLabel.setLayoutX(10.0);
         contentLabel.setLayoutY(60.0);
@@ -99,7 +99,7 @@ public class AfficherTest implements Initializable {
         HBox buttonPane = createButtonPane(test);
         buttonPane.setLayoutX(10.0);
         buttonPane.setLayoutY(120.0); // Positionner les boutons en dessous du contenu du test
-        card.getChildren().addAll(counterLabel, contentLabel, descriptionLabel, buttonPane);
+        card.getChildren().addAll(contentLabel, descriptionLabel, buttonPane);
 
         return card;
     }
