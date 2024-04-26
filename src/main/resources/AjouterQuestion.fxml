@@ -4,48 +4,58 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="nh" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterQuestion">
    <children>
+      <ImageView fitHeight="560.0" fitWidth="828.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/bg2.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="fx_content" layoutX="198.0" layoutY="51.0" prefHeight="41.0" prefWidth="314.0" />
       <TextField fx:id="fx_correctchoice" layoutX="198.0" layoutY="260.0" prefHeight="47.0" prefWidth="314.0" />
       <TextField fx:id="fx_choice2" layoutX="198.0" layoutY="158.0" prefHeight="41.0" prefWidth="314.0" />
       <TextField fx:id="fx_choice3" layoutX="198.0" layoutY="205.0" prefHeight="47.0" prefWidth="314.0" />
       <ComboBox fx:id="ListTest" layoutX="198.0" layoutY="315.0" prefHeight="41.0" prefWidth="314.0" />
-      <Label layoutX="92.0" layoutY="72.0" prefHeight="17.0" prefWidth="71.0" text="Content :">
+      <Label layoutX="92.0" layoutY="72.0" prefHeight="17.0" prefWidth="71.0" text="Content :" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="92.0" layoutY="128.0" prefHeight="17.0" prefWidth="71.0" text="Choice1 :">
+      <Label layoutX="92.0" layoutY="128.0" prefHeight="17.0" prefWidth="71.0" text="Choice1 :" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="92.0" layoutY="173.0" prefHeight="17.0" prefWidth="71.0" text="Choice2 :">
+      <Label layoutX="92.0" layoutY="173.0" prefHeight="17.0" prefWidth="71.0" text="Choice2 :" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="92.0" layoutY="217.0" prefHeight="17.0" prefWidth="71.0" text="Choice3 :">
+      <Label layoutX="92.0" layoutY="217.0" prefHeight="17.0" prefWidth="71.0" text="Choice3 :" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="82.0" layoutY="275.0" prefHeight="17.0" prefWidth="105.0" text="correctchoice:">
+      <Label layoutX="82.0" layoutY="275.0" prefHeight="17.0" prefWidth="105.0" text="correctchoice:" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="fx_choice1" layoutX="198.0" layoutY="108.0" prefHeight="41.0" prefWidth="314.0" />
-      <Label layoutX="92.0" layoutY="310.0" prefHeight="17.0" prefWidth="49.0" text="Test :">
+      <Label layoutX="92.0" layoutY="310.0" prefHeight="17.0" prefWidth="49.0" text="Test :" textFill="RED">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="534.0" layoutY="356.0" mnemonicParsing="false" onAction="#AjouterQuestion" prefHeight="34.0" prefWidth="53.0" text="Ajout" />
+      <Button layoutX="534.0" layoutY="356.0" mnemonicParsing="false" onAction="#AjouterQuestion" prefHeight="34.0" prefWidth="53.0" text="Ajout">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnToAffiche" text="Affiche" />
    </children>
 </AnchorPane>
