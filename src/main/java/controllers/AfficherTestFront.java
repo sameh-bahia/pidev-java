@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AfficherTest implements Initializable {
+public class AfficherTestFront implements Initializable {
 
     @FXML
     private AnchorPane nh;
@@ -96,62 +96,12 @@ public class AfficherTest implements Initializable {
         descriptionLabel.setLayoutY(90.0);
         descriptionLabel.setFont(new Font(14.0));
 
-        HBox buttonPane = createButtonPane(test);
-        buttonPane.setLayoutX(10.0);
-        buttonPane.setLayoutY(120.0); // Positionner les boutons en dessous du contenu du test
-        card.getChildren().addAll(counterLabel, contentLabel, descriptionLabel, buttonPane);
+        card.getChildren().addAll(counterLabel, contentLabel, descriptionLabel);
 
         return card;
     }
 
-    private HBox createButtonPane(Test test) {
-        HBox buttonPane = new HBox();
 
-        ImageView deleteImageView = new ImageView(new Image(getClass().getResourceAsStream("/Trash.png")));
-        deleteImageView.setFitHeight(20.0);
-        deleteImageView.setFitWidth(20.0);
-        deleteImageView.setPickOnBounds(true);
-        deleteImageView.setPreserveRatio(true);
-        deleteImageView.setOnMouseClicked((MouseEvent event) -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm Deletion");
-            alert.setHeaderText("Are you sure you want to delete this test?");
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Trouver le parent de buttonPane qui est la carte de test
-                Pane card = (Pane) buttonPane.getParent();
-
-                // Supprimer la carte de la VBox
-                vbox1.getChildren().remove(card);
-
-                // Supprimer le test de la base de données
-                serviceTest.supprimerTest(test.getId());
-                afficherTests(); // Rafraîchir l'affichage
-            }
-        });
-
-        ImageView editImageView = new ImageView(new Image(getClass().getResourceAsStream("/Edit.png")));
-        editImageView.setFitHeight(20.0);
-        editImageView.setFitWidth(20.0);
-        editImageView.setPickOnBounds(true);
-        editImageView.setPreserveRatio(true);
-        editImageView.setOnMouseClicked((MouseEvent event) -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierTest.fxml"));
-                Pane root = loader.load();
-                ModifierTest modifierTest = loader.getController();
-                modifierTest.initData(test.getId(), test.getTitle(), test.getDescription());
-                nh.getChildren().setAll(root);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        buttonPane.getChildren().addAll(deleteImageView, editImageView);
-
-        return buttonPane;
-    }
 
     @FXML
     private void goToAjouterTest(ActionEvent event) {
@@ -164,27 +114,8 @@ public class AfficherTest implements Initializable {
         }
     }
 
-    @FXML
-    private void goToMenu(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/menu.fxml"));
-            Pane root = loader.load();
-            nh.getChildren().setAll(root);
-        } catch (IOException ex) {
-            System.out.println("Erreur lors du chargement de la vue : " + ex.getMessage());
-        }
-    }
 
-    @FXML
-    private void goToAjouter(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterTest.fxml"));
-            Pane root = loader.load();
-            nh.getChildren().setAll(root);
-        } catch (IOException ex) {
-            System.out.println("Erreur lors du chargement de la vue : " + ex.getMessage());
-        }
-    }
+
 
 
 }
