@@ -17,6 +17,7 @@ public class MainFX extends Application {
            root = FXMLLoader.load(getClass().getResource("/menu.fxml"));
           //  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));
             //  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));
+            //  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));//  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));//  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));//  root = FXMLLoader.load(getClass().getResource("/AfficherQuestionFront.fxml"));
             Scene scene = new Scene(root, 1000, 600);
 
             primaryStage.setTitle("SoftFire");
