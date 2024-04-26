@@ -93,7 +93,7 @@ public class AfficherQuestion implements Initializable {
         counterLabel.setLayoutY(30.0);
         counterLabel.setFont(new Font(14.0));
 */
-        Label contentLabel = new Label(question.getContent());
+        Label contentLabel = new Label("Content: " +question.getContent());
         contentLabel.setLayoutX(10.0);
         contentLabel.setLayoutY(60.0);
         contentLabel.setFont(new Font(14.0));

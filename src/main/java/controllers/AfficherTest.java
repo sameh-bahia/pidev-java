@@ -86,7 +86,7 @@ public class AfficherTest implements Initializable {
         counterLabel.setLayoutY(30.0);
         counterLabel.setFont(new Font(14.0));
 */
-        Label contentLabel = new Label(test.getTitle());
+        Label contentLabel = new Label("Test Title: " +test.getTitle());
         contentLabel.setLayoutX(10.0);
         contentLabel.setLayoutY(60.0);
         contentLabel.setFont(new Font(14.0));
