@@ -148,5 +148,28 @@ public class ServiceTest implements IServiceTest{
 
         return test;
     }
+    public List<Question> getQuestionsByTestId(int testId) {
+        List<Question> questions = new ArrayList<>();
+        String sql = "SELECT * FROM Question WHERE test_id = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(sql)) {
+            statement.setInt(1, testId);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    int id = result.getInt("id");
+                    String content = result.getString("content");
+                    String choice1 = result.getString("choice1");
+                    String choice2 = result.getString("choice2");
+                    String choice3 = result.getString("choice3");
+                    String correctChoice = result.getString("correctchoice");
+                    Question question = new Question(id, content, choice1, choice2, choice3, correctChoice);
+                    questions.add(question);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return questions;
+    }
+
     }
 

@@ -1,13 +1,23 @@
 package models;
 
+import java.util.List;
+
 public class Test {
 
         private int id;
         private String title;
         private String description;
-
+    private List<Question> questions;
     public Test() {
     }
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
 
     public Test(String title, String description) {
         this.title = title;

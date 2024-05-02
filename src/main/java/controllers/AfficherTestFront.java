@@ -7,15 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import models.Question;
 import models.Test;
+import services.ServiceQuestion;
 import services.ServiceTest;
 
 import java.io.IOException;
@@ -98,23 +98,47 @@ public class AfficherTestFront implements Initializable {
 
         card.getChildren().addAll(counterLabel, contentLabel, descriptionLabel);
 
+        // Ajouter un gestionnaire d'événements pour le clic sur la carte
+        card.setOnMouseClicked(event -> {
+            afficherQuestions(test); // Appel de la méthode pour afficher les questions du test cliqué
+        });
+
         return card;
     }
 
-
-    @FXML
-    private void goToAjouterTest(ActionEvent event) {
+    private void afficherQuestions(Test test) {
+        // Afficher les questions correspondant au test sélectionné
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterTest.fxml"));
-            Pane root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuestionFront.fxml"));
+            AnchorPane root = loader.load();
+
+            // Obtenir le contrôleur de la vue AfficherQuestionFront
+            AfficherQuestionFront controller = loader.getController();
+
+            // Récupérer les questions correspondant au test sélectionné
+            List<Question> questions = serviceTest.getQuestionsByTestId(test.getId());
+
+            // Passer les questions au contrôleur
+            controller.setQuestions(questions);
+
+            // Afficher la nouvelle vue
             nh.getChildren().setAll(root);
         } catch (IOException ex) {
             System.out.println("Erreur lors du chargement de la vue : " + ex.getMessage());
         }
     }
 
+    @FXML
+    private void logout(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment vous déconnecter ?");
 
-
-
-
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+            nh.getChildren().setAll(pane);
+        }
+    }
 }
