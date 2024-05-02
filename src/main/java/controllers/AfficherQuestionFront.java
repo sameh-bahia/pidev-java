@@ -113,24 +113,34 @@ public class AfficherQuestionFront implements Initializable {
     }
 
     // Méthode appelée lors du clic sur le bouton Soumettre
+    // Méthode appelée lors du clic sur le bouton Soumettre
     @FXML
     private void handleSubmit() {
         int totalQuestions = questions.size();
-        int correctAnswers = 0;
+        int totalCorrectAnswers = 0; // Nombre total de réponses correctes
 
+        // Parcourir toutes les questions
         for (int i = 0; i < totalQuestions; i++) {
             Question question = questions.get(i);
 
+            // Récupérer la carte associée à la question
+            Pane card = questionCards.get(i);
+
             // Récupérer le bouton sélectionné du groupe de boutons de la question actuelle
-            Pane card = questionCards.get(i); // Récupérer la carte associée à la question
             RadioButton selectedRadio = (RadioButton) toggleGroup.getSelectedToggle();
+
+            // Si aucun bouton n'est sélectionné, passer à la question suivante
+            if (selectedRadio == null) {
+                continue;
+            }
+
             String selectedAnswer = selectedRadio.getText();
             String correctAnswer = question.getCorrectchoice();
 
             // Mettre en évidence la réponse correcte en vert et la réponse incorrecte en rouge
             if (selectedAnswer.equals(correctAnswer)) {
                 highlightAnswer(card, selectedRadio, true); // Mettre en évidence la réponse correcte en vert
-                correctAnswers++;
+                totalCorrectAnswers++; // Incrémenter le nombre total de réponses correctes
             } else {
                 // Trouver le bouton radio correspondant à la réponse correcte
                 RadioButton correctRadio = findRadioButton(card, correctAnswer);
@@ -139,11 +149,15 @@ public class AfficherQuestionFront implements Initializable {
             }
         }
 
-        double percentageCorrect = ((double) correctAnswers / totalQuestions) * 100;
+        // Calculer le pourcentage de réponses correctes pour l'ensemble du quiz
+        double percentageCorrect = ((double) totalCorrectAnswers / totalQuestions) * 100;
+        String formattedPercentage = String.format("%.2f", percentageCorrect); // Formater le pourcentage avec deux décimales
+
         // Afficher le pourcentage dans l'interface
-        Label percentageLabel = new Label("Pourcentage de réponses correctes : " + percentageCorrect + "%");
+        Label percentageLabel = new Label("Pourcentage de réponses correctes : " + formattedPercentage + "%");
         vbox1.getChildren().add(percentageLabel);
     }
+
 
     // Méthode pour mettre en évidence la réponse correcte ou incorrecte
     private void highlightAnswer(Pane card, RadioButton radioButton, boolean isCorrect) {

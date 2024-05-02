@@ -108,5 +108,6 @@ public class Question {
         // Créer une liste contenant tous les choix
         return Arrays.asList(choice1, choice2, choice3);
     }
+
 }
 
