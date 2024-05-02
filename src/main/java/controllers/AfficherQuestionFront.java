@@ -3,18 +3,20 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import models.Question;
-import models.Test;
-import services.ServiceQuestion;
-import services.ServiceTest;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,10 +28,12 @@ public class AfficherQuestionFront implements Initializable {
     @FXML
     private VBox vbox1;
 
-    ServiceQuestion serviceQuestion = new ServiceQuestion();
-    ServiceTest serviceTest = new ServiceTest();
+    @FXML
+    private Button submitButton;
 
     private List<Question> questions;
+    private List<Pane> questionCards = new ArrayList<>();
+    private ToggleGroup toggleGroup;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,47 +45,35 @@ public class AfficherQuestionFront implements Initializable {
     private void afficherQuestions() {
         vbox1.getChildren().clear(); // Effacer le contenu actuel de la VBox
 
+        // Initialiser le groupe de boutons
+        toggleGroup = new ToggleGroup();
+
         if (questions != null && !questions.isEmpty()) {
             vbox1.setSpacing(50.0); // Ajouter un espacement vertical entre chaque carte
             vbox1.setPadding(new Insets(30.0)); // Ajouter un espacement horizontal et vertical autour de la VBox
 
-            HBox currentRow = new HBox(); // Créer une nouvelle rangée
-            currentRow.setSpacing(20.0); // Espacement horizontal entre les cartes
-
-            int questionsAdded = 0; // Nombre de questions ajoutées dans la rangée actuelle
-
             int counter = 1; // Compteur pour chaque question
             for (Question question : questions) {
                 Pane card = createQuestionCard(question, counter);
-                currentRow.getChildren().add(card); // Ajouter la carte à la rangée actuelle
-                questionsAdded++;
-
-                // Si trois questions ont été ajoutées, ajouter la rangée à la VBox et créer une nouvelle rangée
-                if (questionsAdded == 3) {
-                    vbox1.getChildren().add(currentRow); // Ajouter la rangée à la VBox
-                    currentRow = new HBox(); // Créer une nouvelle rangée
-                    currentRow.setSpacing(20.0); // Espacement horizontal entre les cartes
-                    questionsAdded = 0; // Réinitialiser le compteur de questions ajoutées
-                }
+                questionCards.add(card); // Ajouter la carte à la liste
+                vbox1.getChildren().add(card); // Ajouter la carte à la VBox
                 counter++; // Incrémenter le compteur de question
             }
 
-            // Ajouter un espace vertical entre les lignes de cartes
-            vbox1.getChildren().add(new Pane());
-
-            // Ajouter la rangée restante si elle n'est pas complète
-            if (questionsAdded > 0) {
-                vbox1.getChildren().add(currentRow);
-            }
+            // Créer et configurer le bouton Soumettre
+            submitButton = new Button("Soumettre");
+            submitButton.setOnAction(event -> handleSubmit());
+            vbox1.getChildren().add(submitButton); // Ajouter le bouton à la VBox
         }
     }
 
     // Méthode pour créer une carte de question
     private Pane createQuestionCard(Question question, int counter) {
         Pane card = new Pane();
-        card.setPrefHeight(120.0);
-        card.setMinHeight(120.0);
+        card.setPrefHeight(200.0); // Augmenter la hauteur pour accommoder les boutons radio
+        card.setMinHeight(200.0);
         card.setPrefWidth(250.0);
+        card.setStyle("-fx-border-color: black; -fx-border-width: 2px;"); // Ajouter une bordure noire de 2 pixels
 
         Label counterLabel = new Label("Question " + counter + ": ");
         counterLabel.setLayoutX(10.0);
@@ -93,30 +85,85 @@ public class AfficherQuestionFront implements Initializable {
         contentLabel.setLayoutY(60.0);
         contentLabel.setFont(new Font(14.0));
 
-        Label choice1Label = new Label("Choice 1: " + question.getChoice1());
-        choice1Label.setLayoutX(10.0);
-        choice1Label.setLayoutY(90.0);
-        choice1Label.setFont(new Font(14.0));
+        RadioButton choice1Radio = new RadioButton(question.getChoice1());
+        choice1Radio.setLayoutX(10.0);
+        choice1Radio.setLayoutY(90.0);
+        choice1Radio.setFont(new Font(14.0));
 
-        Label choice2Label = new Label("Choice 2: " + question.getChoice2());
-        choice2Label.setLayoutX(10.0);
-        choice2Label.setLayoutY(120.0);
-        choice2Label.setFont(new Font(14.0));
+        RadioButton choice2Radio = new RadioButton(question.getChoice2());
+        choice2Radio.setLayoutX(10.0);
+        choice2Radio.setLayoutY(120.0);
+        choice2Radio.setFont(new Font(14.0));
 
-        Label choice3Label = new Label("Choice 3: " + question.getChoice3());
-        choice3Label.setLayoutX(10.0);
-        choice3Label.setLayoutY(150.0);
-        choice3Label.setFont(new Font(14.0));
+        RadioButton choice3Radio = new RadioButton(question.getChoice3());
+        choice3Radio.setLayoutX(10.0);
+        choice3Radio.setLayoutY(150.0);
+        choice3Radio.setFont(new Font(14.0));
 
-        Label correctChoiceLabel = new Label("Correct Choice: " + question.getCorrectchoice());
-        correctChoiceLabel.setLayoutX(10.0);
-        correctChoiceLabel.setLayoutY(180.0);
-        correctChoiceLabel.setFont(new Font(14.0));
+        // Ajouter les boutons radio au groupe de boutons
+        toggleGroup = new ToggleGroup();
+        choice1Radio.setToggleGroup(toggleGroup);
+        choice2Radio.setToggleGroup(toggleGroup);
+        choice3Radio.setToggleGroup(toggleGroup);
 
         // Ajouter tous les éléments à la carte
-        card.getChildren().addAll(counterLabel, contentLabel, choice1Label, choice2Label, choice3Label, correctChoiceLabel);
+        card.getChildren().addAll(counterLabel, contentLabel, choice1Radio, choice2Radio, choice3Radio);
 
         return card;
+    }
+
+    // Méthode appelée lors du clic sur le bouton Soumettre
+    @FXML
+    private void handleSubmit() {
+        int totalQuestions = questions.size();
+        int correctAnswers = 0;
+
+        for (int i = 0; i < totalQuestions; i++) {
+            Question question = questions.get(i);
+
+            // Récupérer le bouton sélectionné du groupe de boutons de la question actuelle
+            Pane card = questionCards.get(i); // Récupérer la carte associée à la question
+            RadioButton selectedRadio = (RadioButton) toggleGroup.getSelectedToggle();
+            String selectedAnswer = selectedRadio.getText();
+            String correctAnswer = question.getCorrectchoice();
+
+            // Mettre en évidence la réponse correcte en vert et la réponse incorrecte en rouge
+            if (selectedAnswer.equals(correctAnswer)) {
+                highlightAnswer(card, selectedRadio, true); // Mettre en évidence la réponse correcte en vert
+                correctAnswers++;
+            } else {
+                // Trouver le bouton radio correspondant à la réponse correcte
+                RadioButton correctRadio = findRadioButton(card, correctAnswer);
+                highlightAnswer(card, selectedRadio, false); // Mettre en évidence la réponse incorrecte en rouge
+                highlightAnswer(card, correctRadio, true); // Mettre en évidence la réponse correcte en vert
+            }
+        }
+
+        double percentageCorrect = ((double) correctAnswers / totalQuestions) * 100;
+        // Afficher le pourcentage dans l'interface
+        Label percentageLabel = new Label("Pourcentage de réponses correctes : " + percentageCorrect + "%");
+        vbox1.getChildren().add(percentageLabel);
+    }
+
+    // Méthode pour mettre en évidence la réponse correcte ou incorrecte
+    private void highlightAnswer(Pane card, RadioButton radioButton, boolean isCorrect) {
+        Color color;
+        if (isCorrect) {
+            color = Color.GREEN; // Couleur verte pour la réponse correcte
+        } else {
+            color = Color.RED; // Couleur rouge pour la réponse incorrecte
+        }
+        radioButton.setTextFill(color);
+    }
+
+    // Méthode pour trouver le bouton radio correspondant à une réponse donnée dans une carte
+    private RadioButton findRadioButton(Pane card, String answer) {
+        for (javafx.scene.Node node : card.getChildren()) {
+            if (node instanceof RadioButton && ((RadioButton) node).getText().equals(answer)) {
+                return (RadioButton) node;
+            }
+        }
+        return null;
     }
 
     // Méthode pour définir les questions
@@ -124,5 +171,4 @@ public class AfficherQuestionFront implements Initializable {
         this.questions = questions;
         afficherQuestions(); // Mettre à jour l'affichage des questions
     }
-
 }

@@ -85,48 +85,44 @@ public class AfficherQuestion implements Initializable {
     private Pane createQuestionCard(Question question, int counter) {
         Pane card = new Pane();
         card.setPrefHeight(120.0);
-        card.setMinHeight(120.0);
+        card.setMinHeight(230.0);
         card.setPrefWidth(250.0);
+        card.setStyle("-fx-border-color: black; -fx-border-width: 2px;"); // Ajouter une bordure noire de 2 pixels
 
-     /*   Label counterLabel = new Label("Question " + counter + ": ");
-        counterLabel.setLayoutX(10.0);
-        counterLabel.setLayoutY(30.0);
-        counterLabel.setFont(new Font(14.0));
-*/
-        Label contentLabel = new Label("Content: " +question.getContent());
+        Label contentLabel = new Label("Content: " + question.getContent());
         contentLabel.setLayoutX(10.0);
-        contentLabel.setLayoutY(60.0);
+        contentLabel.setLayoutY(30.0);
         contentLabel.setFont(new Font(14.0));
 
         Label choice1Label = new Label("Choice 1: " + question.getChoice1());
         choice1Label.setLayoutX(10.0);
-        choice1Label.setLayoutY(90.0);
+        choice1Label.setLayoutY(60.0);
         choice1Label.setFont(new Font(14.0));
 
         Label choice2Label = new Label("Choice 2: " + question.getChoice2());
         choice2Label.setLayoutX(10.0);
-        choice2Label.setLayoutY(120.0);
+        choice2Label.setLayoutY(90.0);
         choice2Label.setFont(new Font(14.0));
 
         Label choice3Label = new Label("Choice 3: " + question.getChoice3());
         choice3Label.setLayoutX(10.0);
-        choice3Label.setLayoutY(150.0);
+        choice3Label.setLayoutY(120.0);
         choice3Label.setFont(new Font(14.0));
 
         Label correctChoiceLabel = new Label("Correct Choice: " + question.getCorrectchoice());
         correctChoiceLabel.setLayoutX(10.0);
-        correctChoiceLabel.setLayoutY(180.0);
+        correctChoiceLabel.setLayoutY(150.0);
         correctChoiceLabel.setFont(new Font(14.0));
 
         Test test = serviceTest.getTestById(question.getTest_id());
         Label testLabel = new Label("Test: " + test.getTitle());
         testLabel.setLayoutX(10.0);
-        testLabel.setLayoutY(210.0);
+        testLabel.setLayoutY(180.0);
         testLabel.setFont(new Font(14.0));
 
         HBox buttonPane = createButtonPane(question);
         buttonPane.setLayoutX(10.0);
-        buttonPane.setLayoutY(240.0);
+        buttonPane.setLayoutY(210.0);
 
         // Ajouter tous les éléments à la carte
         card.getChildren().addAll(contentLabel, choice1Label, choice2Label, choice3Label, correctChoiceLabel, testLabel, buttonPane);

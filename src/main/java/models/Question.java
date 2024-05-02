@@ -1,5 +1,8 @@
 package models;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Question {
 
         private int id;
@@ -99,6 +102,11 @@ public class Question {
                 ", correctchoice='" + correctchoice + '\'' +
                 ", test_id=" + test_id +
                 '}';
+    }
+
+    public List<String> getChoices() {
+        // Créer une liste contenant tous les choix
+        return Arrays.asList(choice1, choice2, choice3);
     }
 }
 

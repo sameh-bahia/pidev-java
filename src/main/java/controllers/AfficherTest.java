@@ -78,31 +78,34 @@ public class AfficherTest implements Initializable {
     private Pane createTestCard(Test test, int counter) {
         Pane card = new Pane();
         card.setPrefHeight(160.0); // Ajuster la hauteur de la carte pour accommoder les boutons
-        card.setMinHeight(160.0); // Ajuster la hauteur minimale de la carte
+        card.setMinHeight(110.0); // Ajuster la hauteur minimale de la carte
         card.setPrefWidth(250.0);
+        card.setStyle("-fx-border-color: black; -fx-border-width: 2px;"); // Ajouter une bordure noire de 2 pixels
 
-      /*  Label counterLabel = new Label("Test " + counter + ": ");
-        counterLabel.setLayoutX(10.0);
-        counterLabel.setLayoutY(30.0);
-        counterLabel.setFont(new Font(14.0));
-*/
-        Label contentLabel = new Label("Test Title: " +test.getTitle());
+        Label contentLabel = new Label("Test Title: " + test.getTitle());
         contentLabel.setLayoutX(10.0);
-        contentLabel.setLayoutY(60.0);
+        contentLabel.setLayoutY(30.0);
         contentLabel.setFont(new Font(14.0));
+        if (contentLabel.getLayoutBounds().getWidth() > card.getPrefWidth() - 20) {
+            contentLabel.setWrapText(true);
+        }
 
         Label descriptionLabel = new Label("Description : " + test.getDescription());
         descriptionLabel.setLayoutX(10.0);
-        descriptionLabel.setLayoutY(90.0);
+        descriptionLabel.setLayoutY(60.0);
         descriptionLabel.setFont(new Font(14.0));
+        if (descriptionLabel.getLayoutBounds().getWidth() > card.getPrefWidth() - 20) {
+            descriptionLabel.setWrapText(true);
+        }
 
         HBox buttonPane = createButtonPane(test);
         buttonPane.setLayoutX(10.0);
-        buttonPane.setLayoutY(120.0); // Positionner les boutons en dessous du contenu du test
+        buttonPane.setLayoutY(90.0); // Positionner les boutons en dessous du contenu du test
         card.getChildren().addAll(contentLabel, descriptionLabel, buttonPane);
 
         return card;
     }
+
 
     private HBox createButtonPane(Test test) {
         HBox buttonPane = new HBox();

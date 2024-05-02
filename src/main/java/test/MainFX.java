@@ -14,7 +14,7 @@ public class MainFX extends Application {
 
         Parent root;
         try {
-          //  root = FXMLLoader.load(getClass().getResource("/menu.fxml"));
+            //root = FXMLLoader.load(getClass().getResource("/menu.fxml"));
             root = FXMLLoader.load(getClass().getResource("/AfficherTestFront.fxml"));
 
             Scene scene = new Scene(root, 1000, 600);
